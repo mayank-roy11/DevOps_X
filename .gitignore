@@ -19,3 +19,5 @@ build/
 
 # Docker
 *.db
+
+minikube-linux-amd64
