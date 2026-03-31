@@ -3,8 +3,11 @@ venv/
 __pycache__/
 *.pyc
 
-# Env files (VERY IMPORTANT)
+# Env files
 .env
+.env.*
+!.env.example
+!.env.production
 
 # Node
 node_modules/
@@ -20,4 +23,9 @@ build/
 # Docker
 *.db
 
+# IDE
+.vscode/
+.idea/
+
+# Local tools
 minikube-linux-amd64

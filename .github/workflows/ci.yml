@@ -38,3 +38,12 @@ jobs:
     - name: Push Frontend Image
       run: |
         docker push ${{ secrets.DOCKER_USERNAME }}/feedback-frontend:latest
+
+    # Deploy to Kubernetes
+    - name: Set up kubectl
+      uses: azure/setup-kubectl@v4
+
+    - name: Deploy to Kubernetes
+      run: |
+        kubectl apply -f backend-deployment.yaml
+        kubectl apply -f frontend-deployment.yaml

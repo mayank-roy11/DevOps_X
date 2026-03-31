@@ -20,5 +20,10 @@ spec:
       containers:
       - name: backend
         image: inroy11/feedback-backend:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8000
+
+        env:
+        - name: DATABASE_URL
+          value: postgresql://postgres:postgres@postgres-service:5432/feedback_db
