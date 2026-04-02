@@ -1,17 +1,26 @@
 version: "3.9"
 services:
   backend:
-    build: ./backend
+    image: inroy11/feedback-backend:latest
     container_name: feedback-backend
     ports:
       - "8000:8000"
-    env_file:
-      - ./backend/.env
+    environment:
+      APP_NAME: Feedback Service
+      ENVIRONMENT: production        # ← changed from development
+      DEBUG: "false"                 # ← changed from true
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/feedback_db
+      DB_HOST: db                    # ← IMPORTANT: changed from localhost to db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: feedback_db
+      CORS_ALLOW_ORIGINS: http://localhost:80,http://localhost:3000
     depends_on:
       db:
         condition: service_healthy
     networks:
-      - app-network        
+      - app-network
 
   db:
     image: postgres:15
@@ -29,21 +38,21 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - app-network        
+      - app-network
 
   frontend:
-    build: ./frontend
+    image: inroy11/feedback-frontend:latest
     container_name: feedback-frontend
     ports:
       - "80:80"
     depends_on:
       - backend
     networks:
-      - app-network        
+      - app-network
 
 volumes:
   postgres_data:
 
-networks:                  
+networks:
   app-network:
     driver: bridge
